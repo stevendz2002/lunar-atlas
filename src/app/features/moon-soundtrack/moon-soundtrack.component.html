@@ -17,7 +17,7 @@
     Lunar Atlas es un proyecto de fans sin ánimo de lucro y no posee los derechos de esta grabación.</p>
 </section>
 
-@if (audioSrc && !audioUnavailable()) {
+@if (!audioUnavailable()) {
   <audio #audio [src]="audioSrc" autoplay loop preload="metadata" hidden
     (play)="playing.set(true)" (pause)="playing.set(false)" (error)="audioUnavailable.set(true)"></audio>
   <button class="soundtrack-sound" type="button" (click)="toggleSound()">

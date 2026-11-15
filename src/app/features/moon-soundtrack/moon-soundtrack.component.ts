@@ -1,8 +1,5 @@
 import { Component, ElementRef, signal, viewChild } from '@angular/core';
 
-// Set this to a direct audio source authorized for use on the site.
-const soundtrackSource: string | null = null;
-
 @Component({
   selector: 'app-moon-soundtrack',
   standalone: true,
@@ -11,7 +8,7 @@ const soundtrackSource: string | null = null;
 })
 export class MoonSoundtrackComponent {
   private readonly audio = viewChild<ElementRef<HTMLAudioElement>>('audio');
-  readonly audioSrc = soundtrackSource;
+  readonly audioSrc = 'assets/somnias-a-luna.mp3';
   readonly playing = signal(false);
   readonly muted = signal(false);
   readonly audioUnavailable = signal(false);

@@ -82,7 +82,7 @@ Workflow: `.github/workflows/deploy-pages.yml`.
 
 ## Derechos de autor y atribuciones
 
-La pista «Lullaby of the New Moon (I): Somnias a Luna» de HOYO-MiX se acredita y se enlaza a su video original. El repositorio no incluye la grabación. Para habilitar el audio nativo, configura `soundtrackSource` en `moon-soundtrack.component.ts` con una URL directa o ruta relativa a un archivo autorizado. Si el navegador bloquea el inicio automático con sonido, el visitante puede usar el botón Activar música. Ese mismo botón permite silenciarla mientras recorre el sitio.
+La pista «Lullaby of the New Moon (I): Somnias a Luna» de HOYO-MiX usa el MP3 proporcionado para este proyecto. Se reproduce en bucle con audio nativo, y la sección de música conserva el enlace al video original y el aviso de derechos. Si el navegador bloquea el inicio automático con sonido, pulsa **Activar música**. El mismo botón permite silenciarla mientras recorres el sitio.
 
 El archivo `public/assets/eclipse-reference.png` procede de una captura **facilitada por el usuario para la referencia artística**. **No conocemos su licencia de redistribución.** Una nota de copyright de miHoYo NO constituye una licencia que autorice el uso público de imágenes, música o personajes, y la titularidad de cada obra debe confirmarse. Antes de publicar en Pages, sustituye esa imagen por material con licencia compatible o consigue permiso de uso. Puedes retirarla: la escena WebGL y el fallback CSS continúan funcionando.
 
