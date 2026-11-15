@@ -1,0 +1,36 @@
+name: GitHub Pages (manual)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Instalar dependencias
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install --no-audit --no-fund; fi
+      - name: Pruebas unitarias
+        run: npm test
+      - name: Build con base path del repositorio
+        run: npm run build -- --base-href "/${{ github.event.repository.name }}/"
+      - name: Fallback SPA para Pages
+        run: cp dist/lunar-atlas/browser/index.html dist/lunar-atlas/browser/404.html
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/lunar-atlas/browser
+      - id: deployment
+        uses: actions/deploy-pages@v4

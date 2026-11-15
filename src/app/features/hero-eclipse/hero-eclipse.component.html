@@ -1,0 +1,25 @@
+<section class="hero" id="home" aria-label="Lunar Atlas, experiencia de introducción">
+  <img class="artwork" src="assets/eclipse-reference.png" alt="" aria-hidden="true" fetchpriority="high">
+  <div class="cosmic-gradient" aria-hidden="true"></div>
+  <div class="canvas-host" #canvasHost aria-hidden="true"></div>
+  <div class="static-eclipse" aria-hidden="true" [class.static-eclipse--visible]="!webglAvailable()"><span class="static-eclipse__moon"></span><span class="static-eclipse__horizon"></span></div>
+  <div class="hero__side-label">THE CELESTIAL ARCHIVE <span> / </span> BETWEEN LIGHT AND SHADOW</div>
+  <div class="hero__coordinates mono">EARTH // SOLAR SYSTEM // 001</div>
+  <div class="hero__layout">
+    <div class="hero__copy" #copy>
+      <p class="eyebrow"><span class="eyebrow__line"></span> AN INTERACTIVE LUNAR OBSERVATORY</p>
+      <h1>THERE IS<br><span>MORE THAN</span><br>ONE MOON<span class="hero__period">.</span></h1>
+      <div class="hero__description"><span class="hero__index mono">[ 00 / ORIGIN ]</span><p>La nuestra no es la única. Descubre <strong>los mundos que orbitan otros mundos</strong>: lunas de hielo, océanos escondidos y volcanes al borde del vacío.</p></div>
+      <div class="hero__actions"><a class="primary-link" href="#archive"><span>EXPLORAR LAS LUNAS</span><span aria-hidden="true">↗</span></a><a class="secondary-link" href="#phases">OBSERVATORIO ↗</a></div>
+    </div>
+  </div>
+  <div class="hero__footer mono"><span>00 — A CELESTIAL JOURNEY</span><span>SCROLL TO DISCOVER <span class="hero__down">↓</span></span></div>
+  @if (phase() !== 'ready') {
+    <div class="intro" #preloader role="status" aria-live="polite">
+      <div class="intro__ring"><span class="intro__orb"></span></div>
+      <div class="intro__flare" #introFlare aria-hidden="true"></div>
+      <div class="intro__bottom"><div class="intro__meta"><span>LUNAR ATLAS // INITIALIZING</span><span>{{ progress() }}%</span></div><div class="intro__track"><span [style.width.%]="progress()"></span></div></div>
+      <button class="intro__skip" type="button" (click)="skipIntro()">SKIP INTRO <span aria-hidden="true">↗</span></button>
+    </div>
+  }
+</section>

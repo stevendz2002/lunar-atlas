@@ -1,0 +1,11 @@
+<section class="observatory" id="phases" aria-labelledby="phases-title">
+  <div class="observatory__heading"><p class="label">02 / LABORATORIO LUNAR</p><h2 id="phases-title">Las ocho formas<br><em>de la luz.</em></h2><p>Un ciclo, ocho caras de la misma Luna. Explora cómo cambia su parte iluminada durante una lunación.</p></div>
+  <div class="observatory__console">
+    <div class="observatory__space"><span class="observatory__axis axis--a"></span><span class="observatory__axis axis--b"></span><div class="phase-moon" [class]="'phase-moon phase-moon--' + index()"><i></i></div><span class="observatory__vertical">PHASE / {{ current().label }} — LUNAR CYCLE</span></div>
+    <div class="observatory__controls"><span class="label">FASE SELECCIONADA / {{ current().label }}</span><h3>{{ current().name }}</h3><p>{{ current().description }}</p><div class="phase-buttons" role="group" aria-label="Selecciona una fase lunar">
+      @for (phase of phases; track phase.label; let i = $index) {
+        <button type="button" (click)="setPhase(i)" [class.is-active]="index() === i" [attr.aria-pressed]="index() === i" [attr.aria-label]="phase.name"><span class="phase-dot" [class]="'phase-dot phase-dot--' + i"></span><span>{{ phase.label }}</span></button>
+      }
+    </div><p class="observatory__note">SIMULADOR CONCEPTUAL · NO INDICA LA FASE LUNAR DE HOY</p></div>
+  </div>
+</section>

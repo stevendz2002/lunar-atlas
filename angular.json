@@ -1,0 +1,53 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm",
+    "analytics": "955314f6-37ee-4682-a410-2465f77c1b77"
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "lunar-atlas": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [{ "glob": "**/*", "input": "public" }],
+            "styles": ["src/styles.css"],
+            "outputPath": "dist/lunar-atlas"
+          },
+          "configurations": {
+            "production": {
+              "optimization": { "scripts": true, "styles": true, "fonts": false },
+              "budgets": [
+                { "type": "initial", "maximumWarning": "1.6MB", "maximumError": "2.6MB" },
+                { "type": "anyComponentStyle", "maximumWarning": "12kB", "maximumError": "24kB" }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "development": { "buildTarget": "lunar-atlas:build:development" },
+            "production": { "buildTarget": "lunar-atlas:build:production" }
+          },
+          "defaultConfiguration": "development"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<header class="site-header">
+  <a class="site-header__brand" href="#home" aria-label="Lunar Atlas, inicio"><span class="site-header__sigil">◑</span><span>LUNAR<span class="site-header__brand-accent">.</span>ATLAS <small>CELESTIAL ARCHIVE</small></span></a>
+  <nav aria-label="Navegación principal"><a href="#archive">LUNAS</a><a href="#phases">FASES</a><a href="#soundtrack">MÚSICA</a></nav>
+  <a class="site-header__contact" href="https://github.com/stevendz2002/lunar-atlas" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+</header>
+<div class="system-hud mono" aria-label="Estado del renderizador">
+  <div><span class="system-hud__light"></span>GFX: {{ monitor.status().toUpperCase() }}</div>
+  <div>FRAME RATE: {{ monitor.fps() }} FPS</div>
+  <div>POINTER: {{ monitor.pointer().x }}, {{ monitor.pointer().y }}</div>
+</div>
+<main>
+  <app-hero-eclipse />
+  <div class="after-hero">
+    <div class="marquee mono" aria-hidden="true"><span>◌ · EUROPA · TITÁN · ENCÉLADO · ÍO · GANÍMEDES · TRITÓN · MIRANDA · </span><span>◌ · EUROPA · TITÁN · ENCÉLADO · ÍO · GANÍMEDES · TRITÓN · MIRANDA · </span></div>
+    <app-moon-gallery />
+    <div class="separator mono"><span>ARCHIVE / END</span><span>◌</span><span>OBSERVATION / BEGIN</span></div>
+    <app-moon-observatory />
+    <app-moon-soundtrack />
+    <section class="closing" aria-label="Fin de la exploración"><p class="closing__eyebrow mono">END OF TRANSMISSION — 003</p><h2>WE ARE ALL<br><em>MADE OF STARDUST.</em></h2><p>El universo está lleno de mundos por descubrir. Esta es una pequeña ventana hacia ellos.</p><a href="#home">VOLVER AL ORIGEN ↑</a></section>
+  </div>
+</main>
+<footer class="site-footer mono">
+  <div class="site-footer__top"><span>© {{ year }} LUNAR ATLAS · EXPERIMENTO WEB NO OFICIAL</span><span>ANGULAR · THREE.JS · GSAP · WIKIDATA</span><span>MADE ON EARTH ◒</span></div>
+  <p class="site-footer__legal">© All rights reserved by miHoYo. Other properties and any right, title, and interest thereof and therein (intellectual property rights included) not derived from Genshin Impact belong to their respective owners.</p>
+  <p class="site-footer__legal">Genshin Impact y la música de HOYO-MiX pertenecen a sus respectivos titulares. Lunar Atlas no está afiliado ni respaldado por miHoYo/HoYoverse.</p>
+</footer>

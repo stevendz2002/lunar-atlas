@@ -1,0 +1,77 @@
+<section class="archive" id="archive" aria-labelledby="archive-title">
+  <div class="section-line"><span>01 / CATÁLOGO ASTRONÓMICO</span><span>OBSERVATORIO // 00-∞</span></div>
+  <header class="archive__heading">
+    <div><p class="eyebrow"><span class="dash"></span> TRAVEL THROUGH THE UNKNOWN</p>
+      <h2 id="archive-title">Mundos que <em>orbitan</em><br>en silencio<span class="punct">.</span></h2>
+    </div>
+    <p class="archive__lead">Bajo las sombras de gigantes planetarios existen océanos ocultos, volcanes activos y paisajes imposibles. Escoge una luna y explora sus secretos.</p>
+  </header>
+
+  <div class="spotlight" [class]="'spotlight spotlight--' + selected().palette">
+    <div class="spotlight__visual">
+      <span class="orbit orbit--outer"></span><span class="orbit orbit--inner"></span>
+      <span class="spotlight__crosshair">+ &nbsp; SCAN / 001</span>
+      <div class="celestial-sphere" aria-hidden="true">
+        <div class="celestial-sphere__surface"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <span class="spotlight__caption">VISUALIZACIÓN ARTÍSTICA · NO A ESCALA</span>
+    </div>
+    <div class="spotlight__information" aria-live="polite">
+      <div class="spotlight__meta"><span>OBJETO DESTACADO</span><span class="spotlight__number">◈ ARCHIVO LUNAR</span></div>
+      <p class="spotlight__planet">{{ selected().planet.toUpperCase() }} / SATÉLITE NATURAL</p>
+      <h3>{{ selected().name }}</h3>
+      <p class="spotlight__tagline">{{ selected().tagline }}</p>
+      <p class="spotlight__description">{{ selected().description }}</p>
+      <div class="spotlight__stats">
+        <div><span>RADIO APROX.</span><strong>{{ formattedRadius() }}</strong><small>KM</small></div>
+        <div><span>PERÍODO ORBITAL</span><strong>{{ formattedPeriod() }}</strong><small>DÍAS TERRESTRES</small></div>
+      </div>
+      <div class="spotlight__actions">
+        <div class="spotlight__pagination"><button type="button" (click)="previous()" aria-label="Luna anterior">←</button><button type="button" (click)="next()" aria-label="Luna siguiente">→</button></div>
+        @if (selected().wikidataUrl; as url) {
+          <a [href]="url" target="_blank" rel="noopener noreferrer">FICHA DE DATOS ↗</a>
+        } @else {
+          <span class="spotlight__note">CATÁLOGO LOCAL</span>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="archive__toolbar">
+    <div class="archive__toolbar-title"><span>EXPEDIENTES LUNARES</span><small> {{ filtered().length }} RESULTADOS</small></div>
+    <div class="archive__source" aria-live="polite">
+      <span class="source-indicator" [class.source-indicator--live]="api.source() === 'wikidata'"></span>
+      @switch (api.source()) {
+        @case ('wikidata') { WIKIDATA / DATOS CONSULTADOS }
+        @case ('sincronizando') { CONSULTANDO API… }
+        @default { DATOS DE RESPALDO }
+      }
+      <button type="button" (click)="api.refresh()" [disabled]="api.loading()" aria-label="Recargar información de Wikidata">↻</button>
+    </div>
+  </div>
+  @if (api.error(); as error) { <p class="archive__warning" role="status">{{ error }}</p> }
+  <div class="archive__controls">
+    <div class="planet-filters" role="group" aria-label="Filtrar por planeta">
+      @for (planet of planets; track planet) {
+        <button type="button" (click)="setPlanet(planet)" [class.is-active]="activePlanet() === planet" [attr.aria-pressed]="activePlanet() === planet">{{ planet }}</button>
+      }
+    </div>
+    <div class="archive__inputs">
+      <label class="search-field"><span class="sr-only">Buscar lunas</span><span>⌕</span><input #moonSearch type="search" placeholder="Buscar una luna…" [value]="search()" (input)="search.set(moonSearch.value)" autocomplete="off"></label>
+      <label class="select-field"><span class="sr-only">Ordenar lunas</span><select #sortField [value]="order()" (change)="setSort(sortField.value)"><option value="destacadas">Destacadas</option><option value="nombre">A — Z</option><option value="radio">Mayor radio</option></select></label>
+    </div>
+  </div>
+  <div class="moon-grid">
+    @for (moon of displayed(); track moon.id; let i = $index) {
+      <button class="moon-card" type="button" [class.is-selected]="moon.id === selected().id" (click)="select(moon)" [attr.aria-label]="'Explorar ' + moon.name + ', luna de ' + moon.planet">
+        <div class="moon-card__header"><span>{{ (i + 1).toString().padStart(2, '0') }}</span><span>↗</span></div>
+        <div class="moon-card__sky" [class]="'moon-card__sky moon-card__sky--' + moon.palette"><div class="mini-sphere"><i></i><i></i><i></i></div></div>
+        <div class="moon-card__bottom"><small>{{ moon.planet.toUpperCase() }} / SATÉLITE</small><strong>{{ moon.name }}</strong><span>{{ moon.radiusKm !== null ? (moon.radiusKm | number:'1.0-1') + ' km radio' : 'Radio sin datos' }}</span></div>
+      </button>
+    } @empty { <div class="archive__empty">No encontramos lunas con esos filtros. Prueba con otro planeta o nombre.</div> }
+  </div>
+  @if (displayed().length < filtered().length) {
+    <button type="button" class="archive__more" (click)="more()">EXPLORAR MÁS LUNAS <span>↓</span></button>
+  }
+  <p class="archive__disclaimer">Los radios y períodos se muestran cuando hay datos disponibles. Las esferas son ilustraciones procedurales, no fotografías científicas ni representaciones a escala. <a href="https://www.wikidata.org/wiki/Wikidata:Data_access" target="_blank" rel="noopener noreferrer">Origen: Wikidata ↗</a></p>
+</section>

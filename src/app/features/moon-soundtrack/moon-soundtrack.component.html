@@ -1,0 +1,22 @@
+<section class="soundtrack" id="soundtrack" aria-labelledby="soundtrack-title">
+  <div class="soundtrack__icon" aria-hidden="true">♫</div>
+  <div class="soundtrack__text">
+    <p>03 / THE SOUND OF THE MOON</p>
+    <h2 id="soundtrack-title">Una canción para el <em>cosmos.</em></h2>
+    <span>HOYO-MiX · Lullaby of the New Moon (I): Somnias a Luna</span>
+  </div>
+  <div class="soundtrack__actions">
+    <a href="https://www.youtube.com/watch?v=rX8kBUIT5dE" target="_blank" rel="noopener noreferrer">
+      VER VIDEO ORIGINAL EN YOUTUBE ↗
+    </a>
+  </div>
+  @if (audioSrc && !audioUnavailable()) {
+    <audio [src]="audioSrc" controls autoplay loop preload="metadata"
+      aria-label="Banda sonora de Lunar Atlas" (error)="audioUnavailable.set(true)"></audio>
+  }
+  @if (audioUnavailable()) {
+    <p class="soundtrack__status" role="status">La pista no está disponible. Puedes escucharla en el video original.</p>
+  }
+  <p class="soundtrack__credit">℗ miHoYo. Todos los derechos reservados a sus respectivos titulares.
+    Lunar Atlas es un proyecto de fans sin ánimo de lucro y no posee los derechos de esta grabación.</p>
+</section>
