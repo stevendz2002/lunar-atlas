@@ -268,7 +268,8 @@ export class ThreeEngineService {
       blending: THREE.AdditiveBlending
     });
     const halo = new THREE.Mesh(new THREE.PlaneGeometry(3.3, 3.3), this.haloMaterial);
-    halo.position.set(0, -0.40, -0.38);
+    halo.position.copy(moon.position);
+    halo.position.z -= 0.50;
     scene.add(halo);
 
     // Emisión horizontal anamórfica justo en el horizonte de la Tierra.
@@ -279,7 +280,7 @@ export class ThreeEngineService {
       blending: THREE.AdditiveBlending
     });
     const flare = new THREE.Mesh(new THREE.PlaneGeometry(12.5, 0.95), this.flareMaterial);
-    flare.position.set(0, -1.23, 0.30);
+    flare.position.set(earth.position.x, -1.15, 0.30);
     scene.add(flare);
   }
 
