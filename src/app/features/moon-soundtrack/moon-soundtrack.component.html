@@ -19,7 +19,7 @@
 
 @if (!audioUnavailable()) {
   <audio #audio [src]="audioSrc" autoplay loop preload="metadata" hidden
-    (play)="playing.set(true)" (pause)="playing.set(false)" (error)="audioUnavailable.set(true)"></audio>
+    (play)="playbackStarted()" (pause)="playing.set(false)" (error)="audioUnavailable.set(true)"></audio>
   <button class="soundtrack-sound" type="button" (click)="toggleSound()">
     ♫ {{ playing() && !muted() ? 'Silenciar música' : 'Activar música' }}
   </button>
