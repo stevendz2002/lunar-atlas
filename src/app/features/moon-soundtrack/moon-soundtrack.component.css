@@ -9,7 +9,7 @@
 .soundtrack__text span{color:#a9bfdb}
 .soundtrack__actions a{display:inline-block;border:1px solid #ab9b79;color:#f0e4c8;padding:12px 16px;text-decoration:none}
 .soundtrack__actions a:hover{background:#e5e2d8;color:#0c1522}
-audio{width:min(100%,420px);color-scheme:dark;margin-right:100%}
 .soundtrack__credit,.soundtrack__status{flex:1 0 100%;margin:0;color:#a9bfdb;font:12px/1.65 'DM Sans',sans-serif}
 .soundtrack__credit{border-top:1px solid #6e86a24b;padding-top:16px}
 @media(max-width:600px){.soundtrack{margin:0 20px 65px;padding:23px;gap:18px}.soundtrack__icon{height:48px;width:48px;font-size:25px}.soundtrack__text{flex-basis:160px}}
+.soundtrack-sound{position:fixed;z-index:20;right:clamp(10px,2vw,24px);bottom:max(12px,env(safe-area-inset-bottom));padding:10px 14px;border:1px solid #ab9b79;background:#101a2a;color:#f0e4c8;font:11px/1.4 'Space Mono',monospace;cursor:pointer}
