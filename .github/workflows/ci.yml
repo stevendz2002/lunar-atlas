@@ -1,15 +1,70 @@
-name: CI
-on: [push, pull_request]
+name: CI y publicación de Lunar Atlas
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: lunar-atlas-${{ github.event_name == 'pull_request' && github.ref || 'publish' }}
+  cancel-in-progress: false
+
 permissions:
   contents: read
+
 jobs:
-  check:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+          cache: npm
       - run: npm ci
+      - run: npm run typecheck
       - run: npm test
-      - run: npm run build
+      - id: pages
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+      - name: Compilar con la ruta pública de Pages
+        env:
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          PAGES_CONFIGURED: ${{ steps.pages.outcome }}
+        run: |
+          base="$PAGES_BASE"
+          if [ "$PAGES_CONFIGURED" = skipped ]; then base="/$REPOSITORY_NAME"; fi
+          npm run build -- --base-href "${base%/}/"
+          test -s dist/lunar-atlas/browser/index.html
+          test -s dist/lunar-atlas/browser/assets/eclipse-reference.png
+      - uses: actions/upload-pages-artifact@v4
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          path: dist/lunar-atlas/browser
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
+      - name: Verificar la publicación
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          curl --fail --silent --show-error --location --retry 8 --retry-all-errors \
+            --retry-delay 7 --max-time 12 "${SITE_URL%/}/" -o published.html
+          grep -Fiq 'Lunar Atlas' published.html

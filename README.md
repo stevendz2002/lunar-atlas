@@ -11,7 +11,7 @@ Experiencia web experimental e interactiva sobre **las lunas del sistema solar**
 - Explorador conceptual e interactivo de las ocho fases de nuestra Luna. **No calcula la fase lunar de hoy.**
 - Créditos y enlace al video original de HOYO-MiX. Reproductor HTML nativo opcional para una fuente de audio autorizada.
 - Fallback CSS sin WebGL, soporte para `prefers-reduced-motion`, limpieza GPU y render fuera de `NgZone`.
-- Pruebas y compilación con GitHub Actions; despliegue opcional y manual a GitHub Pages.
+- Pruebas, compilación y publicación automatizadas con GitHub Actions.
 
 ## Instalación en Windows
 
@@ -36,7 +36,7 @@ El proyecto incluye **Vitest 4** para evitar el conflicto de dependencias con `@
 
 ```text
 lunar-atlas/
-├── .github/workflows/deploy-pages.yml
+├── .github/workflows/ci.yml
 ├── angular.json
 ├── package.json
 ├── public/assets/eclipse-reference.png  # Referencia visual aportada por el usuario
@@ -70,16 +70,9 @@ Se incluyó un catálogo educativo local de 18 lunas para que el sitio arranque 
 
 ## Despliegue a GitHub Pages
 
-1. Crea un **nuevo repositorio** independiente en GitHub, por ejemplo `lunar-atlas`.
-2. Copia todos los archivos del proyecto en la **raíz** del repositorio (allí debe quedar `package.json`).
-3. Ejecuta `npm install` y sube también `package-lock.json`.
-4. Confirma los cambios y haz `git push -u origin main`.
-5. En GitHub, **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-6. En **Actions**, ejecuta el workflow **GitHub Pages (manual)**. El build usa el nombre del repositorio como ruta base.
-7. Normalmente estará en `https://<usuario>.github.io/<nombre-del-repo>/`. Solo da por publicado el proyecto después de confirmar el run y la página.
+El workflow `.github/workflows/ci.yml` instala las dependencias del lockfile, revisa TypeScript y ejecuta Vitest antes de compilar. Los pull requests solo ejecutan CI. Los cambios en `main` publican el artefacto Angular en GitHub Pages y verifican que el sitio responda.
 
-Workflow: `.github/workflows/deploy-pages.yml`.
-
+El dominio personalizado es `lunar-atlas.stevendz.tech`. GitHub Pages determina la ruta base. En DNS, el CNAME de `lunar-atlas` apunta a `stevendz2002.github.io`. Activa **Enforce HTTPS** tras la emisión del certificado.
 ## Derechos de autor y atribuciones
 
 La pista «Lullaby of the New Moon (I): Somnias a Luna» de HOYO-MiX usa el MP3 proporcionado para este proyecto. La página intenta reproducirla en bucle al abrir. Si el navegador bloquea el audio, vuelve a intentarlo con el primer clic. Los botones **Activar música** y **Silenciar música** permiten controlar el sonido. La sección de música conserva el enlace al video original y el aviso de derechos.
